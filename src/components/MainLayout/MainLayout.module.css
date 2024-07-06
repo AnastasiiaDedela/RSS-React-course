@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+  }
+  
+  .searchBlock {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c5eeff;
+    padding: 20px;
+    border: 1px solid rgb(27, 104, 167)rgb(107, 188, 255)rgba(107, 188, 255, 0.897);
+    border-radius: 15px;
+    width: 600px;
+    height: 100px;
+  }
+  
+  .cardsBlock {
+    flex: 3;
+    background-color: #21418578;
+    padding: 20px;
+    width: 600px;
+    border-radius: 15px;
+  }
