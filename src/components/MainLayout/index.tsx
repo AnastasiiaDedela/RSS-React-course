@@ -1,6 +1,4 @@
 import { Component } from 'react';
-// import Search from '../Search/Search';
-// import SearchResults from '../SearchResults/SearchResults';
 import styles from './MainLayout.module.css';
 import { Cards } from '../../types/interfaces';
 import { ApiPerson } from '../../types/types';

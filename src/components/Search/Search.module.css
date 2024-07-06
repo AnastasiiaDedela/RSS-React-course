@@ -22,4 +22,19 @@
   
   .searchSubmitBtn:hover {
     background-color: #34bfff;
+    transition: 0.3s;
+  }
+
+  .errorBtn {
+    padding: 10px 25px;
+    background-color: hsl(346, 100%, 81%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .errorBtn:hover {
+    background-color: #ff7b9a;
+    transition: 0.3s;
   }

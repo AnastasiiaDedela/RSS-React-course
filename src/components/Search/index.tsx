@@ -28,6 +28,10 @@ class Search extends Component<SearchProps, SearchValue> {
     this.props.doSearch(validSearchValue);
   };
 
+  throwError = () => {
+    throw new Error('This is a test error');
+  };
+
   render() {
     return (
       <div className={styles.searchWrapper}>
@@ -40,6 +44,9 @@ class Search extends Component<SearchProps, SearchValue> {
         />
         <button onClick={this.handleSearch} className={styles.searchSubmitBtn}>
           Search
+        </button>
+        <button onClick={this.throwError} className={styles.errorBtn}>
+          Throw Error
         </button>
       </div>
     );
