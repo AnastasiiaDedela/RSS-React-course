@@ -10,7 +10,6 @@
   }
   
   .searchBlock {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,9 +22,9 @@
   }
   
   .cardsBlock {
-    flex: 3;
     background-color: #21418578;
     padding: 20px;
     width: 600px;
+    height: 100px;
     border-radius: 15px;
   }
