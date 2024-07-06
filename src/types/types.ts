@@ -18,3 +18,14 @@ export type SearchValue = {
 export type SearchProps = {
   doSearch: (searchValue: string) => void;
 };
+
+export type CardsProps = {
+  cards: { name: string; description: string; image: string; age: string }[];
+};
+
+export type CardItemProps = {
+  name: string;
+  description: string;
+  image: string;
+  age: string;
+};

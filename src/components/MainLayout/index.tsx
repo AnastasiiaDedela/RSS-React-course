@@ -5,6 +5,7 @@ import styles from './MainLayout.module.css';
 import { Cards } from '../../types/interfaces';
 import { ApiPerson } from '../../types/types';
 import Search from '../Search';
+import CardsList from '../CardsList';
 
 class MainLayout extends Component<Record<string, never>, Cards> {
   constructor(props: Record<string, never>) {
@@ -19,7 +20,7 @@ class MainLayout extends Component<Record<string, never>, Cards> {
   }
 
   doSearch = (searchValue: string) => {
-    let url = 'https://swapi.dev/api/people/?page=3';
+    let url = 'https://swapi.dev/api/people/?page=2';
 
     if (searchValue) {
       url = `https://swapi.dev/api/people/?search=${searchValue}`;
@@ -28,7 +29,7 @@ class MainLayout extends Component<Record<string, never>, Cards> {
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
-        const cardList = res.cardList.map((person: ApiPerson) => {
+        const cardsList = res.results.map((person: ApiPerson) => {
           const splitedURL = person.url.split('/');
           let id = splitedURL[splitedURL.length - 2];
 
@@ -39,7 +40,7 @@ class MainLayout extends Component<Record<string, never>, Cards> {
             age: person.birth_year,
           };
         });
-        this.setState({ cards: cardList });
+        this.setState({ cards: cardsList });
       })
       .catch((error) => console.error('Error fetching data:', error));
   };
@@ -54,7 +55,9 @@ class MainLayout extends Component<Record<string, never>, Cards> {
         <div className={styles.searchBlock}>
           <Search doSearch={this.handleSearch} />
         </div>
-        <div className={styles.cardsBlock}>Cards</div>
+        <div className={styles.cardsBlock}>
+          <CardsList cards={this.state.cards} />
+        </div>
       </div>
     );
   }
