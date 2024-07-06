@@ -2,8 +2,8 @@ import { Component } from 'react';
 // import Search from '../Search/Search';
 // import SearchResults from '../SearchResults/SearchResults';
 import styles from './MainLayout.module.css';
-import { ApiPerson, Cards } from '../../typeScript/interfaces';
-// import { APICharacter, Cards } from '../../types/interfaces';
+import { Cards } from '../../typeScript/interfaces';
+import { ApiPerson } from '../../typeScript/types';
 
 class MainLayout extends Component<Record<string, never>, Cards> {
   constructor(props: Record<string, never>) {
