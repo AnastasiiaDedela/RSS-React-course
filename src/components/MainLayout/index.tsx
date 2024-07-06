@@ -4,6 +4,7 @@ import { Component } from 'react';
 import styles from './MainLayout.module.css';
 import { Cards } from '../../types/interfaces';
 import { ApiPerson } from '../../types/types';
+import Search from '../Search';
 
 class MainLayout extends Component<Record<string, never>, Cards> {
   constructor(props: Record<string, never>) {
@@ -43,10 +44,16 @@ class MainLayout extends Component<Record<string, never>, Cards> {
       .catch((error) => console.error('Error fetching data:', error));
   };
 
+  handleSearch = (searchTerm: string) => {
+    this.doSearch(searchTerm);
+  };
+
   render() {
     return (
       <div className={styles.wrapper}>
-        <div className={styles.searchBlock}>Search</div>
+        <div className={styles.searchBlock}>
+          <Search doSearch={this.handleSearch} />
+        </div>
         <div className={styles.cardsBlock}>Cards</div>
       </div>
     );

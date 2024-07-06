@@ -10,3 +10,11 @@ export type Person = {
   image: string;
   age: string;
 };
+
+export type SearchValue = {
+  searchValue: string;
+};
+
+export type SearchProps = {
+  doSearch: (searchValue: string) => void;
+};
