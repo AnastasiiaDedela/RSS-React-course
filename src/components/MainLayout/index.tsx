@@ -29,7 +29,7 @@ class MainLayout extends Component<Record<string, never>, Cards> {
       .then((res) => {
         const cardsList = res.results.map((person: ApiPerson) => {
           const splitedURL = person.url.split('/');
-          let id = splitedURL[splitedURL.length - 2];
+          const id = splitedURL[splitedURL.length - 2];
 
           return {
             name: person.name,
