@@ -1,23 +1,18 @@
-import { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './MainLayout.module.css';
 import { Cards } from '../../types/interfaces';
 import { ApiPerson } from '../../types/types';
 import Search from '../Search';
 import CardsList from '../CardsList';
 
-class MainLayout extends Component<Record<string, never>, Cards> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      cards: [],
-    };
-  }
+const MainLayout: React.FC = () => {
+  const [cards, setCards] = useState<Cards>({ cards: [] });
 
-  componentDidMount() {
-    this.doSearch('');
-  }
+  useEffect(() => {
+    doSearch('');
+  }, []);
 
-  doSearch = (searchValue: string) => {
+  const doSearch = (searchValue: string) => {
     let url = 'https://swapi.dev/api/people/?page=2';
 
     if (searchValue) {
@@ -38,27 +33,25 @@ class MainLayout extends Component<Record<string, never>, Cards> {
             age: person.birth_year,
           };
         });
-        this.setState({ cards: cardsList });
+        setCards({ cards: cardsList });
       })
       .catch((error) => console.error('Error fetching data:', error));
   };
 
-  handleSearch = (searchTerm: string) => {
-    this.doSearch(searchTerm);
+  const handleSearch = (searchTerm: string) => {
+    doSearch(searchTerm);
   };
 
-  render() {
-    return (
-      <div className={styles.wrapper}>
-        <div className={styles.searchBlock}>
-          <Search doSearch={this.handleSearch} />
-        </div>
-        <div className={styles.cardsBlock}>
-          <CardsList cards={this.state.cards} />
-        </div>
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.searchBlock}>
+        <Search doSearch={handleSearch} />
       </div>
-    );
-  }
-}
+      <div className={styles.cardsBlock}>
+        <CardsList cards={cards.cards} />
+      </div>
+    </div>
+  );
+};
 
 export default MainLayout;

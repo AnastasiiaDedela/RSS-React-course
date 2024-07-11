@@ -1,56 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Search.module.css';
-import { SearchValue, SearchProps } from '../../types/types';
+import { SearchProps } from '../../types/types';
 
-class Search extends Component<SearchProps, SearchValue> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      searchValue: '',
-    };
-  }
+const Search: React.FC<SearchProps> = ({ doSearch }) => {
+  const [searchValue, setSearchValue] = useState('');
 
-  componentDidMount() {
-    const searchValue = localStorage.getItem('searchValue');
-    if (searchValue) {
-      this.setState({ searchValue: searchValue });
+  useEffect(() => {
+    const storedSearchValue = localStorage.getItem('searchValue');
+    if (storedSearchValue) {
+      setSearchValue(storedSearchValue);
     }
-  }
+  }, []);
 
-  onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchValue: e.target.value });
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
   };
 
-  handleSearch = () => {
-    const { searchValue } = this.state;
+  const handleSearch = () => {
     const validSearchValue = searchValue.trim();
     localStorage.setItem('searchValue', validSearchValue);
-    this.props.doSearch(validSearchValue);
+    doSearch(validSearchValue);
   };
 
-  throwError = () => {
+  const throwError = () => {
     throw new Error('This is a test error');
   };
 
-  render() {
-    return (
-      <div className={styles.searchWrapper}>
-        <input
-          type="text"
-          value={this.state.searchValue}
-          onChange={this.onChangeInput}
-          className={styles.input}
-          placeholder="Please enter your search term..."
-        />
-        <button onClick={this.handleSearch} className={styles.searchSubmitBtn}>
-          Search
-        </button>
-        <button onClick={this.throwError} className={styles.errorBtn}>
-          Throw Error
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={styles.searchWrapper}>
+      <input
+        type="text"
+        value={searchValue}
+        onChange={onChangeInput}
+        className={styles.input}
+        placeholder="Please enter your search term..."
+      />
+      <button onClick={handleSearch} className={styles.searchSubmitBtn}>
+        Search
+      </button>
+      <button onClick={throwError} className={styles.errorBtn}>
+        Throw Error
+      </button>
+    </div>
+  );
+};
 
 export default Search;
