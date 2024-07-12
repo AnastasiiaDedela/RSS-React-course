@@ -7,12 +7,18 @@ import CardsList from '../CardsList';
 
 const MainLayout: React.FC = () => {
   const [cards, setCards] = useState<Cards>({ cards: [] });
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    doSearch('');
+    console.log('hello');
+    const storedSearchValue = localStorage.getItem('searchValue') || '';
+    console.log('storedSearchValue on mount: ', storedSearchValue); // Log the stored value
+
+    doSearch(storedSearchValue);
   }, []);
 
   const doSearch = (searchValue: string) => {
+    console.log('doSearch called with: ', searchValue); // Log the search value passed
     let url = 'https://swapi.dev/api/people/?page=2';
 
     if (searchValue) {
@@ -22,6 +28,7 @@ const MainLayout: React.FC = () => {
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
+        console.log('Fetch response: ', res); // Log the response
         const cardsList = res.results.map((person: ApiPerson) => {
           const splitedURL = person.url.split('/');
           const id = splitedURL[splitedURL.length - 2];
@@ -39,14 +46,22 @@ const MainLayout: React.FC = () => {
   };
 
   const handleSearch = (searchTerm: string) => {
+    console.log('handleSearch called with: ', searchTerm); // Log the search term passed
     doSearch(searchTerm);
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.searchBlock}>
-        <Search doSearch={handleSearch} />
+        {!hidden && <Search doSearch={handleSearch} />}
       </div>
+      <button
+        onClick={() => {
+          setHidden(!hidden);
+        }}
+      >
+        Display
+      </button>
       <div className={styles.cardsBlock}>
         <CardsList cards={cards.cards} />
       </div>

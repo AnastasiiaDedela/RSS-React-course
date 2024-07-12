@@ -1,16 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Search.module.css';
 import { SearchProps } from '../../types/types';
+import useSearchQuery from '../../customHooks/useSearchQuery';
 
 const Search: React.FC<SearchProps> = ({ doSearch }) => {
-  const [searchValue, setSearchValue] = useState('');
+  //const storedValueRef = useRef('default');
+  //const [searchValue, setSearchValue] = useState<string>('');
 
-  useEffect(() => {
-    const storedSearchValue = localStorage.getItem('searchValue');
-    if (storedSearchValue) {
-      setSearchValue(storedSearchValue);
-    }
-  }, []);
+  // useEffect(() => {
+  //   storedValueRef.current = searchValue;
+  //   console.log('VALUEREF IS: ', storedValueRef.current);
+  // }, [searchValue]);
+
+  // useEffect(() => {
+  //   const storedValue = localStorage.getItem('searchValue') || '';
+  //   storedValueRef.current = storedValue;
+  //   setSearchValue(storedValue);
+
+  //   return () => {
+  //     console.log('SETTING VALUE REF: ', storedValueRef.current);
+  //     localStorage.setItem('searchValue', storedValueRef.current);
+  //   };
+  // }, []);
+
+  const x = useSearchQuery();
+  const { value: searchValue, setValue: setSearchValue } = x;
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -18,8 +32,8 @@ const Search: React.FC<SearchProps> = ({ doSearch }) => {
 
   const handleSearch = () => {
     const validSearchValue = searchValue.trim();
-    localStorage.setItem('searchValue', validSearchValue);
     doSearch(validSearchValue);
+    localStorage.setItem('searchValue', validSearchValue);
   };
 
   const throwError = () => {
