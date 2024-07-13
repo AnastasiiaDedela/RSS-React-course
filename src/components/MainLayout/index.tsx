@@ -4,22 +4,35 @@ import { Cards } from '../../types/interfaces';
 import { ApiPerson } from '../../types/types';
 import Search from '../Search';
 import CardsList from '../CardsList';
+import Pagination from '../Pagination/index';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const MainLayout: React.FC = () => {
+  const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [cards, setCards] = useState<Cards>({ cards: [] });
+
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+
+  const currentPage = Number(params.get('page') || 1);
+
+  const pageOnClick = (pageNum: number) => {
+    navigate(`/heroes?page=${pageNum}`);
+  };
 
   useEffect(() => {
     const storedSearchValue = localStorage.getItem('searchValue') || '';
-    doSearch(storedSearchValue);
-  }, []);
+    handleRequest(storedSearchValue, currentPage);
+  }, [params]);
 
-  const doSearch = (searchValue: string) => {
-    let url = 'https://swapi.dev/api/people/?page=2';
+  const handleRequest = (searchValue: string, currentPage: number) => {
+    let url = `https://swapi.dev/api/people/?page=${currentPage}`;
 
     if (searchValue) {
       url = `https://swapi.dev/api/people/?search=${searchValue}`;
     }
-
+    setIsLoading(true);
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
@@ -34,23 +47,38 @@ const MainLayout: React.FC = () => {
             age: person.birth_year,
           };
         });
+        console.log('res:', res);
         setCards({ cards: cardsList });
+        setCount(res.count);
+        setIsLoading(false);
       })
-      .catch((error) => console.error('Error fetching data:', error));
-  };
-
-  const handleSearch = (searchTerm: string) => {
-    doSearch(searchTerm);
+      .catch((error) => {
+        setIsLoading(false);
+        console.error('Error fetching data:', error);
+      });
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.searchBlock}>
-        <Search doSearch={handleSearch} />
+        <Search handleRequest={handleRequest} currentPage={currentPage} />
       </div>
-      <div className={styles.cardsBlock}>
-        <CardsList cards={cards.cards} />
-      </div>
+      {isLoading ? (
+        <h2>LOADING...</h2>
+      ) : (
+        <>
+          <div className={styles.cardsBlock}>
+            <CardsList cards={cards.cards} />
+          </div>
+          <div className={styles.paginationWrapper}>
+            <Pagination
+              currentPage={currentPage}
+              pageOnClick={pageOnClick}
+              count={count}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

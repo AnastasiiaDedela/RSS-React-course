@@ -2,7 +2,7 @@ import styles from './Search.module.css';
 import { SearchProps } from '../../types/types';
 import useSearchQuery from '../../customHooks/useSearchQuery';
 
-const Search: React.FC<SearchProps> = ({ doSearch }) => {
+const Search: React.FC<SearchProps> = ({ handleRequest, currentPage }) => {
   const x = useSearchQuery('searchValue');
   const { value: searchValue, setValue: setSearchValue } = x;
 
@@ -12,7 +12,7 @@ const Search: React.FC<SearchProps> = ({ doSearch }) => {
 
   const handleSearch = () => {
     const validSearchValue = searchValue.trim();
-    doSearch(validSearchValue);
+    handleRequest(validSearchValue, currentPage);
     localStorage.setItem('searchValue', validSearchValue);
   };
 

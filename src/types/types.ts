@@ -16,7 +16,8 @@ export type SearchValue = {
 };
 
 export type SearchProps = {
-  doSearch: (searchValue: string) => void;
+  handleRequest: (searchValue: string, page: number) => void;
+  currentPage: number;
 };
 
 export type CardsProps = {
