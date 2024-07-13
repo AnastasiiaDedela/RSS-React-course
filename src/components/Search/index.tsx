@@ -1,29 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
 import styles from './Search.module.css';
 import { SearchProps } from '../../types/types';
 import useSearchQuery from '../../customHooks/useSearchQuery';
 
 const Search: React.FC<SearchProps> = ({ doSearch }) => {
-  //const storedValueRef = useRef('default');
-  //const [searchValue, setSearchValue] = useState<string>('');
-
-  // useEffect(() => {
-  //   storedValueRef.current = searchValue;
-  //   console.log('VALUEREF IS: ', storedValueRef.current);
-  // }, [searchValue]);
-
-  // useEffect(() => {
-  //   const storedValue = localStorage.getItem('searchValue') || '';
-  //   storedValueRef.current = storedValue;
-  //   setSearchValue(storedValue);
-
-  //   return () => {
-  //     console.log('SETTING VALUE REF: ', storedValueRef.current);
-  //     localStorage.setItem('searchValue', storedValueRef.current);
-  //   };
-  // }, []);
-
-  const x = useSearchQuery();
+  const x = useSearchQuery('searchValue');
   const { value: searchValue, setValue: setSearchValue } = x;
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {

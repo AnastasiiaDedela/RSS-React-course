@@ -1,22 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useSearchQuery = () => {
-  const storedValueRef = useRef('default');
+const useSearchQuery = (storageKey: string) => {
+  const storedValueRef = useRef('');
   const [value, setValue] = useState<string>('');
 
   useEffect(() => {
     storedValueRef.current = value;
-    console.log('VALUEREF IS: ', storedValueRef.current);
   }, [value]);
 
   useEffect(() => {
-    const storedValue = localStorage.getItem('searchValue') || '';
-    storedValueRef.current = storedValue;
+    const storedValue = localStorage.getItem(storageKey) || '';
+    // storedValueRef.current = storedValue;
     setValue(storedValue);
 
     return () => {
-      console.log('SETTING VALUE REF: ', storedValueRef.current);
-      localStorage.setItem('searchValue', storedValueRef.current);
+      localStorage.setItem(storageKey, storedValueRef.current);
     };
   }, []);
 
@@ -24,3 +22,15 @@ const useSearchQuery = () => {
 };
 
 export default useSearchQuery;
+
+let a = 5;
+
+const f = () => {
+  console.log(a);
+};
+
+a += 76;
+
+f();
+
+console.log(a);
