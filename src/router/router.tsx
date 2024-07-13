@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter, redirect } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
 import NotFound from '../pages/NotFound/NotFound.module';
 import PageParamWrapper from '../components/PageParamWrapper';
