@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Arial', sans-serif;
+}
+
+.searchBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #c5eeff;
+  padding: 40px;
+  border: 1px solid rgb(27, 104, 167) rgb(107, 188, 255)
+    rgba(107, 188, 255, 0.897);
+  width: 100%;
+}
+
+.contentWrapper {
+  background-color: #9ce0ffc9;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  justify-content: center;
+}
+.cardsWrapper {
+  padding: 20px 0;
+  flex: 1;
+}
+.paginationWrapper {
+  width: 100%;
+}
