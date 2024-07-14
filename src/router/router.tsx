@@ -1,20 +1,24 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
-import NotFound from '../pages/NotFound/NotFound.module';
-import PageParamWrapper from '../components/PageParamWrapper';
+import NotFound from '../pages/NotFound/index';
+import CardDetails from '../components/CardDetails';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/heroes?page=1" replace />,
+    element: <Navigate to="/search/1" replace />,
   },
   {
-    path: '/heroes',
-
-    element: (
-      <PageParamWrapper>
-        <MainLayout />
-      </PageParamWrapper>
-    ),
+    path: '/search/:page',
+    element: <MainLayout />,
+    children: [
+      {
+        path: 'details/:id',
+        element: <CardDetails />,
+      },
+    ],
+  },
+  {
+    path: '*',
     errorElement: <NotFound />,
   },
 ]);

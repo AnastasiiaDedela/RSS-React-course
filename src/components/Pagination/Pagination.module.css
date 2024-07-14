@@ -7,6 +7,8 @@
     justify-content: center;
     font-family: "Poppins", sans-serif;
     column-gap: 4px;
+    background-color: #c5eeff;
+    padding: 40px 0;
   }
 
   .pagination li {
@@ -19,8 +21,8 @@
     cursor: pointer;
   }
 
-  .pagination li .active, .pagination li .active:hover{
-    background-color: #559bec8a;
+  .pagination li .active:hover{
+    background-color: #173a618a;
     color: white;
   }
   .active {

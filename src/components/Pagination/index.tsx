@@ -1,5 +1,4 @@
 import styles from './Pagination.module.css';
-import { useEffect } from 'react';
 
 export type PaginationProps = {
   currentPage: number;
@@ -13,12 +12,9 @@ export default function Pagination({
   count,
 }: PaginationProps) {
   const cadrsPerPage = 10;
-  const pages = count / cadrsPerPage;
+  const pages = Math.ceil(count / cadrsPerPage);
   const arrayOfPages = Array.from({ length: pages }, (_, i) => i + 1);
 
-  useEffect(() => {
-    pageOnClick(currentPage);
-  }, [currentPage]);
   return (
     <div>
       <ul className={styles.pagination}>
@@ -45,7 +41,7 @@ export default function Pagination({
         <li
           onClick={() => {
             if (currentPage < pages) {
-              pageOnClick(currentPage - 1);
+              pageOnClick(currentPage + 1);
             }
           }}
         >

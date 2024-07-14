@@ -1,22 +1,31 @@
 import styles from './CardList.module.css';
-import { CardsProps } from '../../types/types';
 import CardItem from '../CardItem';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Hero } from '../../types/types';
 
-const CardsList: React.FC<CardsProps> = ({ cards }) => {
+export type CardsProps = {
+  heroes: Hero[];
+};
+
+const CardsList: React.FC<CardsProps> = ({ heroes }) => {
+  const navigate = useNavigate();
+  const { page } = useParams<{ page: string }>();
+
   return (
     <div className={styles.wrapper}>
       <h2>Results Found :</h2>
       <div className={styles.cardsList}>
-        {cards &&
-          cards.map((card, index) => (
-            <CardItem
-              key={index}
-              name={card.name}
-              description={card.description}
-              age={card.age}
-              image={card.image}
-            />
-          ))}
+        {heroes.map((hero, index) => (
+          <div
+            onClick={() => {
+              const linkArray = hero.url.split('/');
+              const userIndex = linkArray[linkArray.length - 2];
+              navigate(`/search/${page}/details/${userIndex}`);
+            }}
+          >
+            <CardItem key={index} name={hero.name} image={hero.image} />
+          </div>
+        ))}
       </div>
     </div>
   );

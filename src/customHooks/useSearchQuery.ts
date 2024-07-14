@@ -22,15 +22,3 @@ const useSearchQuery = (storageKey: string) => {
 };
 
 export default useSearchQuery;
-
-let a = 5;
-
-const f = () => {
-  console.log(a);
-};
-
-a += 76;
-
-f();
-
-console.log(a);

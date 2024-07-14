@@ -18,15 +18,18 @@
   width: 100%;
 }
 
-.cardsBlock {
+.contentWrapper {
   background-color: #9ce0ffc9;
-  padding: 20px;
-  width: 100%;
   height: 100%;
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  justify-content: center;
 }
-
+.cardsWrapper {
+  padding: 20px 0;
+  flex: 1;
+}
 .paginationWrapper {
-  background-color: #9ce0ffc9;
-  padding: 40px 0 ;
   width: 100%;
 }
