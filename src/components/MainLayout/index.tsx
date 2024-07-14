@@ -17,7 +17,15 @@ const MainLayout: React.FC = () => {
   const pageOnClick = (pageNum: number) => {
     navigate(`/search/${pageNum}`);
   };
-
+  useEffect(() => {
+    if (currentPage == undefined) {
+      navigate(`/search/1`);
+    }
+    const validPage = parseInt(currentPage!);
+    if (validPage < 1 || validPage > 9) {
+      navigate(`/search/1`);
+    }
+  }, [currentPage]);
   useEffect(() => {
     const storedSearchValue = localStorage.getItem('searchValue') || '';
     handleRequest(storedSearchValue, parseInt(currentPage || '1', 10));
