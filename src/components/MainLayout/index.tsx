@@ -5,12 +5,23 @@ import CardsList from '../CardsList';
 import Pagination from '../Pagination/index';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Hero } from '../../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'RSS-React-course/src/redux/store';
+import {
+  setCount,
+  setHeroes,
+  setIsLoading,
+} from '../../redux/slices.ts/heroesSlice';
 
 const MainLayout: React.FC = () => {
-  const [count, setCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [heroes, setHeroes] = useState<Hero[]>([]);
+  // const [count, setCount] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [heroes, setHeroes] = useState<Hero[]>([]);
 
+  const heroes = useSelector((state: RootState) => state.heroes.heroes);
+  const count = useSelector((state: RootState) => state.heroes.count);
+  const isLoading = useSelector((state: RootState) => state.heroes.isLoading);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { page: currentPage } = useParams<{ page: string }>();
 
@@ -36,7 +47,6 @@ const MainLayout: React.FC = () => {
     if (searchValue) {
       url += `&search=${searchValue}`;
     }
-    setIsLoading(true);
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
@@ -49,9 +59,9 @@ const MainLayout: React.FC = () => {
             image: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`,
           };
         });
-        setHeroes(heroes);
-        setCount(res.count);
-        setIsLoading(false);
+        dispatch(setHeroes(heroes));
+        dispatch(setCount(res.count));
+        dispatch(setIsLoading(false));
       })
       .catch((error) => {
         setIsLoading(false);
