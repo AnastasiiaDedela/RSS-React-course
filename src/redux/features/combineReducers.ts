@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import heroesReducer from '../slices.ts/heroesSlice';
+import heroesReducer from '../slices/heroesSlice';
 
 const rootReducer = combineReducers({
   heroes: heroesReducer,

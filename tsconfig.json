@@ -1,4 +1,12 @@
 {
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": ["react", "jest", "css-modules"],
+    "declaration": false,
+    "preserveSymlinks": true
+  },
   "files": [],
   "references": [
     {

@@ -1,80 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from './MainLayout.module.css';
 import Search from '../Search';
 import CardsList from '../CardsList';
-import Pagination from '../Pagination/index';
+import Pagination from '../Pagination';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { Hero } from '../../types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'RSS-React-course/src/redux/store';
+import { useGetHeroesQuery } from '../../redux/api/heroApi';
+import { useDispatch } from 'react-redux';
 import {
   setCount,
   setHeroes,
   setIsLoading,
-} from '../../redux/slices.ts/heroesSlice';
+} from '../../redux/slices/heroesSlice';
 
 const MainLayout: React.FC = () => {
-  // const [count, setCount] = useState(0);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [heroes, setHeroes] = useState<Hero[]>([]);
-
-  const heroes = useSelector((state: RootState) => state.heroes.heroes);
-  const count = useSelector((state: RootState) => state.heroes.count);
-  const isLoading = useSelector((state: RootState) => state.heroes.isLoading);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { page: currentPage } = useParams<{ page: string }>();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const pageNumber = parseInt(currentPage || '1', 10);
+  const searchValue = localStorage.getItem('searchValue') || '';
+
+  const { data, error, isLoading } = useGetHeroesQuery({
+    page: pageNumber,
+    searchValue,
+  });
+
+  useEffect(() => {
+    if (pageNumber < 1 || pageNumber > 9) {
+      navigate(`/search/1`);
+    }
+  }, [pageNumber, navigate]);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setHeroes(data.results));
+      dispatch(setCount(data.count));
+      dispatch(setIsLoading(false));
+    } else if (error) {
+      console.error('Error fetching data:', error);
+      dispatch(setIsLoading(false));
+    }
+  }, [data, error, dispatch]);
 
   const pageOnClick = (pageNum: number) => {
     navigate(`/search/${pageNum}`);
-  };
-
-  useEffect(() => {
-    const validPage = parseInt(currentPage!);
-    if (validPage < 1 || validPage > 9) {
-      navigate(`/search/1`);
-    }
-  }, [currentPage]);
-
-  useEffect(() => {
-    const storedSearchValue = localStorage.getItem('searchValue') || '';
-    handleRequest(storedSearchValue, parseInt(currentPage || '1'));
-  }, [currentPage]);
-
-  const handleRequest = (searchValue: string, currentPage: number) => {
-    let url = `https://swapi.dev/api/people/?page=${currentPage}`;
-
-    if (searchValue) {
-      url += `&search=${searchValue}`;
-    }
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        const heroes = res.results.map((person: Hero) => {
-          const splitedURL = person.url.split('/');
-          const id = splitedURL[splitedURL.length - 2];
-
-          return {
-            ...person,
-            image: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`,
-          };
-        });
-        dispatch(setHeroes(heroes));
-        dispatch(setCount(res.count));
-        dispatch(setIsLoading(false));
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.error('Error fetching data:', error);
-      });
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.searchBlock}>
         <Search
-          handleRequest={handleRequest}
-          currentPage={parseInt(currentPage || '1', 10)}
+          handleRequest={(searchValue: string, pageNumber: number) => {
+            localStorage.setItem('searchValue', searchValue);
+            navigate(`/search/${pageNumber}`);
+          }}
+          currentPage={pageNumber}
         />
       </div>
       {isLoading ? (
@@ -83,7 +63,7 @@ const MainLayout: React.FC = () => {
         <>
           <div className={styles.contentWrapper}>
             <div className={styles.cardsWrapper}>
-              <CardsList heroes={heroes} />
+              <CardsList heroes={data?.results || []} />
             </div>
             <div className={styles.detailsWrapper}>
               <Outlet />
@@ -91,9 +71,9 @@ const MainLayout: React.FC = () => {
           </div>
           <div className={styles.paginationWrapper}>
             <Pagination
-              currentPage={parseInt(currentPage || '1', 10)}
+              currentPage={pageNumber}
               pageOnClick={pageOnClick}
-              count={count}
+              count={data?.count || 0}
             />
           </div>
         </>
