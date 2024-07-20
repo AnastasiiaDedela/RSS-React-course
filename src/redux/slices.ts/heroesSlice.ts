@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Hero } from '../../types/types'; // Adjust the path as necessary
 
-interface HeroesState {
+export interface HeroesState {
   count: number;
   isLoading: boolean;
   heroes: Hero[];
