@@ -3,9 +3,9 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "types": ["react", "jest", "css-modules"],
+    "types": ["react", "jest", "css-modules", "vitest"],
     "declaration": false,
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
   },
   "files": [],
   "references": [

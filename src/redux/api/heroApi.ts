@@ -1,8 +1,4 @@
-import {
-  createApi,
-  fetchBaseQuery,
-  UseQuery,
-} from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Hero } from '../../types/types';
 
 export const heroesApi = createApi({
@@ -36,13 +32,4 @@ export const heroesApi = createApi({
   }),
 });
 
-export const {
-  useGetHeroesQuery,
-}: {
-  useGetHeroesQuery: UseQuery<
-    { results: Hero[]; count: number },
-    { page: number; searchValue?: string },
-    never,
-    { heroApi: string }
-  >;
-} = heroesApi;
+export const { useGetHeroesQuery } = heroesApi;
