@@ -11,11 +11,13 @@ import {
   setHeroes,
   setIsLoading,
 } from '../../redux/slices/heroesSlice';
+import { useTheme } from '../../context/ThemeContext'; // Import the useTheme hook
 
 const MainLayout: React.FC = () => {
   const { page: currentPage } = useParams<{ page: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { theme, toggleTheme } = useTheme(); // Use the theme context
 
   const pageNumber = parseInt(currentPage || '1', 10);
   const searchValue = localStorage.getItem('searchValue') || '';
@@ -46,8 +48,38 @@ const MainLayout: React.FC = () => {
     navigate(`/search/${pageNum}`);
   };
 
+  const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value !== theme) {
+      toggleTheme();
+    }
+  };
+
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={`${styles.wrapper} ${theme === 'dark' ? styles.dark : styles.light}`}
+    >
+      <div className={styles.themeSelector}>
+        <label>
+          <input
+            type="radio"
+            name="theme"
+            value="light"
+            checked={theme === 'light'}
+            onChange={handleThemeChange}
+          />
+          <b>Light</b>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="theme"
+            value="dark"
+            checked={theme === 'dark'}
+            onChange={handleThemeChange}
+          />
+          <b>Dark</b>
+        </label>
+      </div>
       <div className={styles.searchBlock}>
         <Search
           handleRequest={(searchValue: string, pageNumber: number) => {

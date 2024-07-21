@@ -7,13 +7,16 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { ApiProvider } from '@reduxjs/toolkit/query/react';
 import { heroesApi } from './redux/api/heroApi';
+import { ThemeProvider } from './context/ThemeContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
       <ApiProvider api={heroesApi}>
         <ErrorBoundary>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </ErrorBoundary>
       </ApiProvider>
     </Provider>
