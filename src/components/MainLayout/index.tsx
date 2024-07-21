@@ -12,6 +12,7 @@ import {
   setIsLoading,
 } from '../../redux/slices/heroesSlice';
 import { useTheme } from '../../context/ThemeContext'; // Import the useTheme hook
+import Flyout from '../Flyout';
 
 const MainLayout: React.FC = () => {
   const { page: currentPage } = useParams<{ page: string }>();
@@ -99,6 +100,7 @@ const MainLayout: React.FC = () => {
             </div>
             <div className={styles.detailsWrapper}>
               <Outlet />
+              <Flyout />
             </div>
           </div>
           <div className={styles.paginationWrapper}>

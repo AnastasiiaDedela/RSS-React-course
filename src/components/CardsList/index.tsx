@@ -23,7 +23,7 @@ const CardsList: React.FC<CardsProps> = ({ heroes }) => {
               navigate(`/search/${page}/details/${userIndex}`);
             }}
           >
-            <CardItem key={index} name={hero.name} image={hero.image} />
+            <CardItem key={index} hero={hero} />
           </div>
         ))}
       </div>
