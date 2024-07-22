@@ -4,12 +4,15 @@ import { toggleSelectHero } from '../../redux/slices/heroesSlice';
 import { RootState } from '../../redux/store';
 import styles from './CardItem.module.css';
 import { Hero } from '../../types/types';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export type CardItemProps = {
   hero: Hero;
 };
 
 const CardItem: React.FC<CardItemProps> = ({ hero }) => {
+  const navigate = useNavigate();
+  const { page } = useParams<{ page: string }>();
   const dispatch = useDispatch();
   const selectedHeroes = useSelector(
     (state: RootState) => state.heroes.selectedHeroes,
@@ -22,7 +25,14 @@ const CardItem: React.FC<CardItemProps> = ({ hero }) => {
 
   return (
     <div className={styles.cardWrapper}>
-      <div className={styles.cardImg}>
+      <div
+        className={styles.cardImg}
+        onClick={() => {
+          const linkArray = hero.url.split('/');
+          const userIndex = linkArray[linkArray.length - 2];
+          navigate(`/search/${page}/details/${userIndex}`);
+        }}
+      >
         <img src={hero.image} alt={hero.name} className={styles.cardImage} />
       </div>
       <div className={styles.cardContent}>
