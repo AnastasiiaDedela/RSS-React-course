@@ -3,7 +3,7 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "types": ["react", "jest", "css-modules", "vitest"],
+    "types": ["react", "css-modules", "vitest/globals", "@testing-library/jest-dom"],
     "declaration": false,
     "preserveSymlinks": true,
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearSelectedHeroes } from '../../redux/slices/heroesSlice';
+import { clearSelectedHeroes } from '../../redux/slices/selectedHeroesSlice';
 import { RootState } from '../../redux/store';
 import { saveAs } from 'file-saver';
 import styles from './Flyout.module.css';
@@ -10,7 +10,7 @@ const Flyout: React.FC = () => {
   const dispatch = useDispatch();
   const selectedHeroes = useSelector((state: RootState) => {
     console.log('State.heroes:', state); // Debugging line
-    return state.heroes.selectedHeroes;
+    return state.selectedHeroes.selectedHeroes;
   });
 
   if (!Array.isArray(selectedHeroes) || selectedHeroes.length === 0)

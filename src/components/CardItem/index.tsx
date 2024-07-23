@@ -1,30 +1,31 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleSelectHero } from '../../redux/slices/heroesSlice';
-import { RootState } from '../../redux/store';
+import { useDispatch } from 'react-redux';
+import { toggleSelectHero } from '../../redux/slices/selectedHeroesSlice';
 import styles from './CardItem.module.css';
 import { Hero } from '../../types/types';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export type CardItemProps = {
   hero: Hero;
+  isSelected: boolean;
 };
 
-const CardItem: React.FC<CardItemProps> = ({ hero }) => {
+const CardItem: React.FC<CardItemProps> = ({ hero, isSelected, ...props }) => {
   const navigate = useNavigate();
   const { page } = useParams<{ page: string }>();
   const dispatch = useDispatch();
-  const selectedHeroes = useSelector(
-    (state: RootState) => state.heroes.selectedHeroes,
-  );
-  const isSelected = selectedHeroes.some((h) => h.url === hero.url);
 
   const handleSelect = () => {
     dispatch(toggleSelectHero(hero));
   };
 
   return (
-    <div className={styles.cardWrapper}>
+    <div
+      {...props}
+      className={styles.cardWrapper}
+      data-testid="card-item"
+      data-selected={isSelected.toString()}
+    >
       <div
         className={styles.cardImg}
         onClick={() => {
