@@ -12,8 +12,7 @@
     "prepare": "husky install",
     "test": "vitest --coverage",
     "test:watch": "vitest --watch",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
