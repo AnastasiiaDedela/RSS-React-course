@@ -1,4 +1,12 @@
 {
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": ["react", "css-modules", "vitest/globals", "@testing-library/jest-dom"],
+    "declaration": false,
+    "preserveSymlinks": true,
+  },
   "files": [],
   "references": [
     {
