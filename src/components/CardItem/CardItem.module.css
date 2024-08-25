@@ -1,0 +1,33 @@
+.cardWrapper {
+  background-color: #c0eaff;
+  border: 2px solid #34bfff;
+  box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 280px;
+  transition: transform 0.3s;
+  text-align: center;
+  overflow: hidden;
+}
+
+.cardImg {
+  width: 280px;
+  height: auto;
+}
+.cardImg img {
+  width: 100%;
+  height: auto;
+}
+
+.cardContent {
+  padding: 10px;
+}
+
+.cardContent h3 {
+  padding: 10px 0;
+  font-size: 18px;
+}
+
+.cardContent p {
+  margin: 5px 0;
+  color: #0a1449;
+}
