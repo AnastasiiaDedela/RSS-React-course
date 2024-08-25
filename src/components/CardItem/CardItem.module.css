@@ -34,3 +34,7 @@
   margin: 5px 0;
   color: #0a1449;
 }
+
+.cardContent input{
+  font-size: 20px;
+}
