@@ -16,16 +16,26 @@ export type SearchValue = {
 };
 
 export type SearchProps = {
-  doSearch: (searchValue: string) => void;
+  handleRequest: (searchValue: string, page: number) => void;
+  currentPage: number;
 };
 
-export type CardsProps = {
-  cards: { name: string; description: string; image: string; age: string }[];
-};
-
-export type CardItemProps = {
-  name: string;
-  description: string;
+export type Hero = {
   image: string;
-  age: string;
+  name: string;
+  height: string;
+  mass: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
+  birth_year: string;
+  gender: string;
+  homeworld: string;
+  films: string[];
+  species: string[];
+  vehicles: string[];
+  starships: string[];
+  created: string;
+  edited: string;
+  url: string;
 };
